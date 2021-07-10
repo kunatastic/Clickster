@@ -31,13 +31,16 @@ var scores = [
   },
 ];
 
+var activeRooms = [];
+
 io.on("connection", (socket) => {
   console.log("new user logged in", socket.id);
 
   console.log(socket.rooms);
 
-  socket.on("message", ({ name, message }) => {
-    io.emit("message", { name, message });
+  socket.on("join", (data) => {
+    console.log("join", data);
+    io.emit("join", data);
   });
 
   socket.on("disconnect", () => {
