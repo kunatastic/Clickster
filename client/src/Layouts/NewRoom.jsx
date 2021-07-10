@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // Made by Yago Estévez (Twitter: @yagoestevez.com)
 
@@ -30,28 +30,65 @@ const Nav = (props) => {
  ***********************/
 
 const Header = (props) => {
+  const [name, setName] = useState("");
+  const [room, setRoom] = useState("");
+
+  //a function to generate random string
+  const generateRandom = () => {
+    let text = "";
+    const possible =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < 6; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  };
+
+  useEffect(() => {
+    setRoom(generateRandom());
+  }, []);
+
+  const handler = (e) => {
+    e.preventDefault();
+    const payload = {
+      name,
+      room,
+    };
+
+    console.log(payload);
+  };
+
   return (
     <header id="welcome-section">
       <div className="forest" />
       <div className="silhouette" />
       <div className="moon" />
-      <div className="container">
-        <h1>
-          <span className="line">Are you as </span>
-          <span className="line">
-            bored as I am <span className="color">?</span>
-          </span>
-          <span className="line">
-            <span className="color">Maybe</span> a game.
-          </span>
-        </h1>
+      <div className="container form_container">
+        <form>
+          <input
+            type="text"
+            className="inputfield"
+            value={name}
+            placeholder="Username 🧑"
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="text"
+            className="inputfield"
+            value={room}
+            placeholder="Roomname 🏠"
+            onChange={(e) => setRoom(e.target.value)}
+          />
+        </form>
         <div className="buttons">
-          <Link to="/create" className="button_link">
-            Create a new Room
-          </Link>
-          <Link to="/join" className="cta button_link">
-            Join a Room
-          </Link>
+          <button
+            onClick={handler}
+            type="submit"
+            className=" buttons button_link cta formsubmit"
+          >
+            Create
+          </button>
         </div>
       </div>
     </header>

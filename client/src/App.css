@@ -19,7 +19,7 @@ body {
 body {
   color: #252934;
   background: #fafafa;
-  font-size: 62.5%;
+  /* font-size: 62.5%; */
   font-family: "Overlock", Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
@@ -183,7 +183,7 @@ body {
 
 /* Copy and CTA */
 #welcome-section .container {
-  width: fit-content;
+  width: 30%;
   position: absolute;
   right: 0;
   top: 50%;
@@ -292,4 +292,39 @@ body {
   .silhouette {
     width: 100%;
   }
+}
+
+.form_container {
+  /* width: 200px; */
+  border: 4px solid rgb(28, 32, 39);
+  border-radius: 20px;
+  padding: 2em;
+  background-color: rgba(245, 245, 220, 0.01);
+  box-shadow: inset 0 -30px 15px #25293431, inset 0 15px 15px #252934;
+}
+
+input {
+  outline: none;
+  border: none;
+}
+
+.inputfield {
+  width: 100%;
+  height: 3em;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  padding: 0 1em;
+  background: #2f3441;
+  color: #ddc3d6;
+  line-height: 1;
+}
+
+.inputfield:focus {
+  box-shadow: 0 5px 5px #f300b23b, 0 -5px 5px #f300b23b, 5px 0 5px #f300b23b,
+    -5px 0 5px #f300b23b;
+}
+
+.inputfield::placeholder {
+  color: #7e4d80;
 }
