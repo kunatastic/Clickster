@@ -6,6 +6,10 @@ const io = require("socket.io")(http, {
   },
 });
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 // game leaderboard
 
 var scores = [
@@ -40,7 +44,6 @@ io.on("connection", (socket) => {
     console.log("User disconnected", socket.id);
   });
 });
-
 
 const PORT = process.env.PORT || 5001;
 http.listen(PORT, () => {
