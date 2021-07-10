@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import io from "socket.io-client";
 // Made by Yago Estévez (Twitter: @yagoestevez.com)
 
 /***********************
@@ -44,8 +45,12 @@ const Header = (props) => {
     return text;
   };
 
+  const socketRef = useRef();
+
   useEffect(() => {
+    socketRef.current = io.connect("http://localhost:5000");
     setRoom(generateRandom());
+    return () => socketRef.current.disconnect();
   }, []);
 
   const handler = (e) => {
@@ -54,7 +59,7 @@ const Header = (props) => {
       name,
       room,
     };
-
+    socketRef.current.emit("join", payload);
     console.log(payload);
   };
 
