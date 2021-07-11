@@ -10,11 +10,22 @@ This is a multiplayer game for clicking on the button then first person to click
 
 :heavy_check_mark: Forms for creating and joining a room to be continued
 
-- [ ] Forms for creating and joining a room to be continued
+- [x] Server added name field and refactor
+- [x] Emitting condition in create room
+- [x] Button movement
+- [x] Socket.Id reference to the player
+- [ ] Change the room name from arr to string only 1 room at a time
+- [ ] Send the location to all the members in the room
+
+## Future Scope
+
+    1. Limit the room size
+    2. Use muliple playing buttons
+    ... to be continued
 
 ## TECH STACK
 
-    REACT with TYPESCRIPT
-    NODEJS with TYPESCRIPT
+    REACT
+    NODEJS
     EXPRESS
     SOCKET.IO
