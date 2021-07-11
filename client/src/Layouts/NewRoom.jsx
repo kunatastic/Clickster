@@ -61,47 +61,56 @@ const Header = (props) => {
     };
     socket.emit(clientConstants.createNewRoom, payload);
     console.log(payload);
-
-    history.replace(`/room/${room}`);
   };
 
+  socket.on(clientConstants.errorRoomCreation, (data) => {
+    console.log(data);
+  });
+
+  socket.on(clientConstants.successRoomCreation, (data) => {
+    console.log(data);
+    history.replace(`/room/${room}`);
+  });
+
   return (
-    <header id="welcome-section">
-      <div className="forest" />
-      <div className="silhouette" />
-      <div className="moon" />
-      <div className="container form_container">
-        <h1 className="roompage">
-          Create a new room and invite you friends to play with you!
-        </h1>
-        <form>
-          <input
-            type="text"
-            className="inputfield"
-            value={name}
-            placeholder="Username 🧑"
-            required
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="text"
-            className="inputfield"
-            value={room}
-            placeholder="Roomname 🏠"
-            onChange={(e) => setRoom(e.target.value)}
-          />
-        </form>
-        <div className="buttons">
-          <button
-            onClick={handler}
-            type="submit"
-            className=" button_link cta formsubmit"
-          >
-            Create
-          </button>
+    <div className="create">
+      <header id="welcome-section">
+        <div className="forest" />
+        <div className="silhouette" />
+        <div className="moon" />
+        <div className="container form_container">
+          <h1 className="roompage">
+            Create a new room and invite you friends to play with you!
+          </h1>
+          <form>
+            <input
+              type="text"
+              className="inputfield"
+              value={name}
+              placeholder="Username 🧑"
+              required
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="text"
+              className="inputfield"
+              value={room}
+              placeholder="Roomname 🏠"
+              onChange={(e) => setRoom(e.target.value)}
+            />
+          </form>
+          <div className="buttons">
+            <button
+              onClick={handler}
+              type="submit"
+              className=" button_link cta formsubmit"
+            >
+              Create
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </div>
   );
 };
 

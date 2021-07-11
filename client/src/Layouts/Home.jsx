@@ -31,30 +31,32 @@ const Nav = (props) => {
 
 const Header = (props) => {
   return (
-    <header id="welcome-section">
-      <div className="forest" />
-      <div className="silhouette" />
-      <div className="moon" />
-      <div className="container">
-        <h1 className="herotext">
-          <span className="line">Are you as </span>
-          <span className="line">
-            bored as I am <span className="color">?</span>
-          </span>
-          <span className="line">
-            <span className="color">Maybe</span> a game.
-          </span>
-        </h1>
-        <div className="buttons">
-          <Link to="/create" className="button_link">
-            Create a new Room
-          </Link>
-          <Link to="/join" className="cta button_link">
-            Join a Room
-          </Link>
+    <div className="home">
+      <header id="welcome-section">
+        <div className="forest" />
+        <div className="silhouette" />
+        <div className="moon" />
+        <div className="container">
+          <h1 className="herotext">
+            <span className="line">Are you as </span>
+            <span className="line">
+              bored as I am <span className="color">?</span>
+            </span>
+            <span className="line">
+              <span className="color">Maybe</span> a game.
+            </span>
+          </h1>
+          <div className="buttons">
+            <Link to="/create" className="button_link">
+              Create a new Room
+            </Link>
+            <Link to="/join" className="cta button_link">
+              Join a Room
+            </Link>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </div>
   );
 };
 

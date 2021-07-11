@@ -17,7 +17,7 @@ body {
 }
 
 body {
-  color: #252934;
+  color: #333425;
   background: #fafafa;
   /* font-size: 62.5%; */
   font-family: "Overlock", Arial, Helvetica, sans-serif;
@@ -65,8 +65,12 @@ body {
   font-size: 1.6rem;
   cursor: default;
 }
-#navbar .brand a {
+#navbar .brand a,
+.disable .brand {
   color: #fafafa;
+}
+.disable .brand {
+  cursor: not-allowed;
 }
 
 /*****************
@@ -75,9 +79,17 @@ body {
  *****************
  *****************/
 
+.heart #welcome-section {
+  background: linear-gradient(to bottom, #181d23 0%, #3b1c07 80%);
+}
+.create #welcome-section {
+  background: linear-gradient(to bottom, #181d23 0%, #5247b9 80%);
+}
+.home #welcome-section {
+  background: linear-gradient(to bottom, #181d23 0%, #383e53 80%);
+}
+
 #welcome-section {
-  background: #202736;
-  background: linear-gradient(to bottom, #181d23 0%, #202736 80%);
   background-attachment: fixed;
   background-size: cover;
   position: relative;
@@ -341,4 +353,19 @@ input {
   font-style: italic;
   color: #fafafa;
   line-height: 2.5rem;
+}
+
+.hero {
+  /* background-color: #252934; */
+  padding: 1em 2em;
+  font-size: 2em;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  background-color: #439453;
+  /* background-color: transparent; */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transition: 0.5s ease-in-out;
 }

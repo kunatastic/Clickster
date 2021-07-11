@@ -46,9 +46,16 @@ const Header = (props) => {
     };
     socket.emit(clientConstants.joinExistingRoom, payload);
     console.log(payload);
-
-    history.replace(`/room/${room}`);
   };
+
+  socket.on(clientConstants.errorRoomJoining, (data) => {
+    console.log(data);
+  });
+
+  socket.on(clientConstants.successRoomJoining, (data) => {
+    console.log(data);
+    history.replace(`/room/${room}`);
+  });
 
   return (
     <header id="welcome-section">
@@ -82,7 +89,7 @@ const Header = (props) => {
             type="submit"
             className=" button_link cta formsubmit"
           >
-            Create
+            Join
           </button>
         </div>
       </div>
