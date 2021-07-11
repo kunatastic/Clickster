@@ -8,8 +8,9 @@ This is a multiplayer game for clicking on the button then first person to click
 
 ## TODO
 
-[ ] Forms for creating and joining a room
-... to be continued
+:heavy_check_mark: Forms for creating and joining a room to be continued
+
+- [ ] Forms for creating and joining a room to be continued
 
 ## TECH STACK
 
