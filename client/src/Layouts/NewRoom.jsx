@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import io from "socket.io-client";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { clientConstants } from "../Constants/Socket";
+import { SocketContext } from "../Context/Socket";
 // Made by Yago Estévez (Twitter: @yagoestevez.com)
 
 /***********************
@@ -30,28 +31,27 @@ const Nav = (props) => {
   Header Component
  ***********************/
 
+//a function to generate random string
+const generateRandom = () => {
+  let text = "";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < 6; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+};
+
 const Header = (props) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
 
-  //a function to generate random string
-  const generateRandom = () => {
-    let text = "";
-    const possible =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 6; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-  };
-
-  const socketRef = useRef();
+  const socket = useContext(SocketContext);
+  const history = useHistory();
 
   useEffect(() => {
-    socketRef.current = io.connect("http://localhost:5000");
     setRoom(generateRandom());
-    return () => socketRef.current.disconnect();
-  }, []);
+  }, [socket]);
 
   const handler = (e) => {
     e.preventDefault();
@@ -59,8 +59,10 @@ const Header = (props) => {
       name,
       room,
     };
-    socketRef.current.emit("join", payload);
+    socket.emit(clientConstants.createNewRoom, payload);
     console.log(payload);
+
+    history.replace(`/room/${room}`);
   };
 
   return (
@@ -69,6 +71,9 @@ const Header = (props) => {
       <div className="silhouette" />
       <div className="moon" />
       <div className="container form_container">
+        <h1 className="roompage">
+          Create a new room and invite you friends to play with you!
+        </h1>
         <form>
           <input
             type="text"
@@ -90,7 +95,7 @@ const Header = (props) => {
           <button
             onClick={handler}
             type="submit"
-            className=" buttons button_link cta formsubmit"
+            className=" button_link cta formsubmit"
           >
             Create
           </button>
@@ -104,7 +109,7 @@ const Header = (props) => {
   Main Component
  ***********************/
 
-export default function Home() {
+export default function NewRoom() {
   return (
     <>
       <Nav />

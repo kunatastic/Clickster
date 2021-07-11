@@ -36,7 +36,7 @@ const Header = (props) => {
       <div className="silhouette" />
       <div className="moon" />
       <div className="container">
-        <h1>
+        <h1 className="herotext">
           <span className="line">Are you as </span>
           <span className="line">
             bored as I am <span className="color">?</span>
