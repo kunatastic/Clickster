@@ -1,4 +1,4 @@
-const SocketLogic = require("./Socket");
+const SocketLogic = require("./Sockets/Socket");
 
 const app = require("express")();
 const http = require("http").createServer(app);

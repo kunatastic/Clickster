@@ -1,23 +1,7 @@
-const { serverConstants } = require("./Constants/Socket");
+const { serverConstants } = require("../Constants/Socket");
+const { scores } = require("./Score");
 
 // game leaderboard
-
-var scores = {
-  roomId: {
-    players: {
-      gwjigwjo: {
-        socketId: "iogjere8949htg",
-        name: "Kunal",
-        score: 12,
-      },
-      gewij: {
-        socketId: "iogjere8949htg",
-        name: "Kunal1",
-        score: 12,
-      },
-    },
-  },
-};
 
 const positionGenerator = () => {
   return `${Math.floor(Math.random() * 80)}%`;
@@ -30,24 +14,33 @@ var activeRooms = [];
 
 const userJoiningRedunduntCode = (socket, name, room) => {
   socket["userName"] = name;
-  socket["activeRoom"].push(room);
-  const socketID = socket.id;
-  scores[room] = {
-    players: { socketID: { socketId: socket.id, score: 0, name } },
+  socket["activeRoom"] = room;
+
+  const payload = {
+    socketId: socket.id,
+    score: 0,
+    name,
   };
+  scores[room].players[socket.id] = payload;
   socket.join(room);
+  socket.registered = true;
+  console.log(JSON.stringify(scores, null, 2));
 };
 
 const SocketLogic = (io) => {
   io.on(serverConstants.connection, (socket) => {
     // New user Connected
-    socket["activeRoom"] = [];
     activeUsers.push(socket.id);
+    if (socket.registered === undefined) socket["registered"] = false;
 
     // Stats of the sockets
-    console.log("Active Users", activeUsers.length);
-    console.log("Active Rooms", activeRooms.length);
-    console.log(scores);
+    // console.log("Active Users", activeUsers.length);
+    // console.log("Active Rooms", activeRooms.length);
+    console.log();
+    console.log(JSON.stringify(scores, null, 2));
+    console.log("Active rooms", activeRooms);
+    console.log("Active users", activeUsers);
+    console.log();
 
     // Creating a new Room
     socket.on(serverConstants.createNewRoom, ({ name, room }) => {
@@ -55,6 +48,8 @@ const SocketLogic = (io) => {
       if (activeRooms.indexOf(room) == -1) {
         // New room made
         activeRooms.push(room);
+        scores[room] = {};
+        scores[room].players = {};
         userJoiningRedunduntCode(socket, name, room);
         console.log(activeRooms);
 
@@ -64,6 +59,7 @@ const SocketLogic = (io) => {
           msg: "Room created you are ready to go Enjoy",
           count: count++,
         });
+        console.log(`${name} created and joined ${room}`);
       } else {
         // Emit Error
         socket.emit(serverConstants.errorRoomCreation, {
@@ -79,7 +75,7 @@ const SocketLogic = (io) => {
       // If room already exists
       if (activeRooms.indexOf(room) != -1) {
         userJoiningRedunduntCode(socket, name, room);
-        console.log(activeRooms);
+        // console.log(activeRooms);
 
         // Emit success
         socket.emit(serverConstants.successRoomJoining, {
@@ -87,6 +83,7 @@ const SocketLogic = (io) => {
           msg: "Room joined you are ready to go Enjoy",
           count: count++,
         });
+        console.log(`${name} joined ${room}`);
       } else {
         socket.emit(serverConstants.errorRoomJoining, {
           error: true,
@@ -98,27 +95,28 @@ const SocketLogic = (io) => {
     });
 
     socket.on(serverConstants.disconnect, () => {
-      for (let i = 0; i < socket["activeRoom"].length; i++) {
-        const roomName = socket["activeRoom"][i];
-        console.log(roomName);
-        scores[roomName].players = scores[roomName].players.filter(
-          (e) => e.socketId !== socket.id
-        );
-        if (scores[roomName].players.length === 0) {
-          delete scores[roomName];
-          activeRooms = activeRooms.filter((room) => room !== roomName);
-        }
-      }
       activeUsers = activeUsers.filter((user) => user !== socket.id);
-      console.log("User disconnected", activeRooms, socket["userName"]);
+      if (!socket.registered) return;
+
+      const roomName = socket["activeRoom"];
+      console.log(roomName);
+
+      delete scores[roomName].players[socket.id];
+      if (Object.entries(scores[roomName].players).length == 0) {
+        delete scores[roomName];
+        activeRooms = activeRooms.filter((room) => room !== roomName);
+      }
+      // console.log("User disconnected", activeRooms, socket["userName"]);
+      console.log(`${socket.userName} disconnected from ${roomName}`);
+      console.log(JSON.stringify(scores, null, 2));
+
+      socket.registered = false;
     });
 
-    socket
-      .to(socket["room"])
-      .on(serverConstants.sendGameLocation, {
-        left: positionGenerator(),
-        right: positionGenerator(),
-      });
+    // socket.to(socket["activeRoom"]).on(serverConstants.sendGameLocation, {
+    //   left: positionGenerator(),
+    //   right: positionGenerator(),
+    // });
   });
 };
 
