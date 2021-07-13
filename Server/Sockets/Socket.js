@@ -113,10 +113,10 @@ const SocketLogic = (io) => {
       socket.registered = false;
     });
 
-    // socket.to(socket["activeRoom"]).on(serverConstants.sendGameLocation, {
-    //   left: positionGenerator(),
-    //   right: positionGenerator(),
-    // });
+    socket.to(socket["activeRoom"]).emit(serverConstants.sendGameLocation, {
+      left: positionGenerator(),
+      right: positionGenerator(),
+    });
   });
 };
 

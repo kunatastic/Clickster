@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { clientConstants } from "../Constants/Socket";
+import { SocketContext } from "../Context/Socket";
 
 export default function Button() {
   const [topp, setTopp] = useState("79%");
@@ -8,6 +10,12 @@ export default function Button() {
     setLeftp(`${Math.floor(Math.random() * 80)}%`);
     setTopp(`${Math.floor(Math.random() * 80)}%`);
   };
+
+  const socket = useContext(SocketContext);
+
+  socket.on(clientConstants.sendGameLocation, (data) => {
+    console.log(data);
+  });
 
   const style4Game = {
     top: topp,

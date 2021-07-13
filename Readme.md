@@ -14,8 +14,9 @@ This is a multiplayer game for clicking on the button then first person to click
 - [x] Emitting condition in create room
 - [x] Button movement
 - [x] Socket.Id reference to the player
-- [ ] Change the room name from arr to string only 1 room at a time
-- [ ] Send the location to all the members in the room
+- [x] Change the room name from arr to string only 1 room at a time
+- [x] Send the location to all the members in the room
+- [ ] Condition for sending the location details
 
 ## Future Scope
 
