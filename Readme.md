@@ -16,7 +16,14 @@ This is a multiplayer game for clicking on the button then first person to click
 - [x] Socket.Id reference to the player
 - [x] Change the room name from arr to string only 1 room at a time
 - [x] Send the location to all the members in the room
-- [ ] Condition for sending the location details
+- [x] Emit join-game from the front-end
+- [x] on join-game from the client-end
+- [x] Condition for sending the location details
+
+:heavy_check_mark: Sending location done YEAHHH!!!
+
+- [ ] Leaderboard Updating and design
+- [ ] React Conditions for login and redirect
 
 ## Future Scope
 
