@@ -34,9 +34,6 @@ const Header = (props) => {
       <header id="welcome-section">
         <Score />
         <Asset />
-        <Asset />
-        <Asset />
-        <Asset />
       </header>
     </div>
   );

@@ -1,20 +1,25 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { clientConstants } from "../Constants/Socket";
 import { SocketContext } from "../Context/Socket";
 
 export default function Button() {
   const [topp, setTopp] = useState("79%");
   const [leftp, setLeftp] = useState("79%");
-
-  const run = () => {
-    setLeftp(`${Math.floor(Math.random() * 80)}%`);
-    setTopp(`${Math.floor(Math.random() * 80)}%`);
-  };
+  const [count, setCount] = useState(0);
 
   const socket = useContext(SocketContext);
 
-  socket.on(clientConstants.sendGameLocation, (data) => {
-    console.log(data);
+  useEffect(() => {
+    socket.emit(clientConstants.joinGame);
+  }, [socket]);
+
+  const run = () => {
+    socket.emit(clientConstants.winnerClicked);
+  };
+
+  socket.on(clientConstants.sendGameLocation, ({ left, top }) => {
+    setLeftp(left);
+    setTopp(top);
   });
 
   const style4Game = {

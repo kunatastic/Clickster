@@ -21,6 +21,7 @@ const userJoiningRedunduntCode = (socket, name, room) => {
     score: 0,
     name,
   };
+
   scores[room].players[socket.id] = payload;
   socket.join(room);
   socket.registered = true;
@@ -113,9 +114,26 @@ const SocketLogic = (io) => {
       socket.registered = false;
     });
 
-    socket.to(socket["activeRoom"]).emit(serverConstants.sendGameLocation, {
-      left: positionGenerator(),
-      right: positionGenerator(),
+    // socket.on(serverConstants.joinGame, () => {
+    //   console.log("Button initiated for ", socket.userName);
+    //   for (let i = 0; i < 5; i++) {
+    //     socket.emit(serverConstants.sendGameLocation, {
+    //       left: positionGenerator(),
+    //       right: positionGenerator(),
+    //       count: count++,
+    //     });
+    //   }
+    // });
+
+    socket.on(serverConstants.winnerClicked, () => {
+      console.log(`Winner is ${socket.userName} in room ${socket.activeRoom}`);
+      io.of("/")
+        .to(socket.activeRoom)
+        .emit(serverConstants.sendGameLocation, {
+          left: positionGenerator(),
+          top: positionGenerator(),
+          count: count++,
+        });
     });
   });
 };
