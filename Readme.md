@@ -22,6 +22,7 @@ This is a multiplayer game for clicking on the button then first person to click
 
 :heavy_check_mark: Sending location done YEAHHH!!!
 
+- [ ] Players should be array of objects
 - [ ] Leaderboard Updating and design
 - [ ] React Conditions for login and redirect
 

@@ -9,7 +9,7 @@ export default function Score() {
   friends.sort((a, b) => b.score - a.score);
   return (
     <>
-      <div className="score__section">
+      <div className="score-section">
         <h2>RoomId: {32}</h2>
         <h2>Score: {3}</h2>
         LeaderBoard

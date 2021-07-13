@@ -1,17 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { clientConstants } from "../Constants/Socket";
 import { SocketContext } from "../Context/Socket";
 
 export default function Button() {
   const [topp, setTopp] = useState("79%");
   const [leftp, setLeftp] = useState("79%");
-  const [count, setCount] = useState(0);
 
   const socket = useContext(SocketContext);
-
-  useEffect(() => {
-    socket.emit(clientConstants.joinGame);
-  }, [socket]);
 
   const run = () => {
     socket.emit(clientConstants.winnerClicked);

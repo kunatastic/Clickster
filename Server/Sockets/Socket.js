@@ -12,6 +12,14 @@ var count = 0;
 var activeUsers = [];
 var activeRooms = [];
 
+const preProcessLeaderBoard = (socket) => {
+  const payload = [];
+
+  // for (let i=0;i<socket.memberCount;i++){
+  //   const temp =
+  // }
+};
+
 const userJoiningRedunduntCode = (socket, name, room) => {
   socket["userName"] = name;
   socket["activeRoom"] = room;
@@ -23,6 +31,7 @@ const userJoiningRedunduntCode = (socket, name, room) => {
   };
 
   scores[room].players[socket.id] = payload;
+  scores[room].memberCount++;
   socket.join(room);
   socket.registered = true;
   console.log(JSON.stringify(scores, null, 2));
@@ -51,6 +60,7 @@ const SocketLogic = (io) => {
         activeRooms.push(room);
         scores[room] = {};
         scores[room].players = {};
+        scores[room].memberCount = 0;
         userJoiningRedunduntCode(socket, name, room);
         console.log(activeRooms);
 
@@ -102,8 +112,9 @@ const SocketLogic = (io) => {
       const roomName = socket["activeRoom"];
       console.log(roomName);
 
+      socket[roomName].memberCount--;
       delete scores[roomName].players[socket.id];
-      if (Object.entries(scores[roomName].players).length == 0) {
+      if (socket[roomName].memberCount == 0) {
         delete scores[roomName];
         activeRooms = activeRooms.filter((room) => room !== roomName);
       }
@@ -113,17 +124,6 @@ const SocketLogic = (io) => {
 
       socket.registered = false;
     });
-
-    // socket.on(serverConstants.joinGame, () => {
-    //   console.log("Button initiated for ", socket.userName);
-    //   for (let i = 0; i < 5; i++) {
-    //     socket.emit(serverConstants.sendGameLocation, {
-    //       left: positionGenerator(),
-    //       right: positionGenerator(),
-    //       count: count++,
-    //     });
-    //   }
-    // });
 
     socket.on(serverConstants.winnerClicked, () => {
       console.log(`Winner is ${socket.userName} in room ${socket.activeRoom}`);
