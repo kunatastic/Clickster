@@ -7,7 +7,8 @@ export const clientConstants = {
   successRoomJoining: "successRoomJoining",
   errorRoomJoining: "errorRoomJoining",
 
-  joinGame: "joinGame",
   winnerClicked: "winnerClicked",
   sendGameLocation: "sendGameLocation",
+
+  sendLeaderBoard: "sendLeaderBoard",
 };
