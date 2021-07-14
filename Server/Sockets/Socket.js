@@ -59,8 +59,8 @@ const SocketLogic = (io) => {
         // New room made
         activeRooms.push(room);
         scores[room] = {};
-        scores[room].players = {};
         scores[room].memberCount = 0;
+        scores[room].players = {};
         userJoiningRedunduntCode(socket, name, room);
         console.log(activeRooms);
 
@@ -106,15 +106,19 @@ const SocketLogic = (io) => {
     });
 
     socket.on(serverConstants.disconnect, () => {
+      const roomName = socket["activeRoom"];
+      delete socket["userName"];
+      delete socket["activeRoom"];
+
       activeUsers = activeUsers.filter((user) => user !== socket.id);
       if (!socket.registered) return;
 
-      const roomName = socket["activeRoom"];
       console.log(roomName);
 
-      socket[roomName].memberCount--;
+      scores[roomName].memberCount--;
+
       delete scores[roomName].players[socket.id];
-      if (socket[roomName].memberCount == 0) {
+      if (scores[roomName].memberCount == 0) {
         delete scores[roomName];
         activeRooms = activeRooms.filter((room) => room !== roomName);
       }
@@ -126,7 +130,9 @@ const SocketLogic = (io) => {
     });
 
     socket.on(serverConstants.winnerClicked, () => {
-      console.log(`Winner is ${socket.userName} in room ${socket.activeRoom}`);
+      // console.log(`Winner is ${socket.userName} in room ${socket.activeRoom}`);
+      scores[socket.activeRoom].players[socket.id].score++;
+
       io.of("/")
         .to(socket.activeRoom)
         .emit(serverConstants.sendGameLocation, {
@@ -134,6 +140,13 @@ const SocketLogic = (io) => {
           top: positionGenerator(),
           count: count++,
         });
+
+      const points = Object.values(scores[socket.activeRoom].players);
+      console.log(JSON.stringify(points, null, 2));
+
+      io.of("/").to(socket.activeRoom).emit(serverConstants.sendLeaderBoard, {
+        points,
+      });
     });
   });
 };
