@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { clientConstants } from "../Constants/Socket";
 import { SocketContext } from "../Context/Socket";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function Score() {
   const [friends, setFriends] = useState([]);
