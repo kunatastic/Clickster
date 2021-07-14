@@ -22,14 +22,16 @@ This is a multiplayer game for clicking on the button then first person to click
 
 :heavy_check_mark: Sending location done YEAHHH!!!
 
-- [ ] Players should be array of objects
-- [ ] Leaderboard Updating and design
+- [x] Leaderboard Updating
+- [ ] Leaderboard Design
 - [ ] React Conditions for login and redirect
 
 ## Future Scope
 
-    1. Limit the room size
-    2. Use muliple playing buttons
+    1. LeaderBoard is sorting on basis of name 😥😥
+    2. Limit the room size
+    3. Use muliple playing buttons
+    4. Update current users data
     ... to be continued
 
 ## TECH STACK
